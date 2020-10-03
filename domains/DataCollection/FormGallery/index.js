@@ -13,7 +13,7 @@ import ComingSoonSVG from '../../../assets/graphics/static/Adventurer.svg';
 const FormGallery = () => (
   <View>
     <View style={layout.screenRow}>
-      <Text>Puente Forms</Text>
+      <Text>Puente Forms </Text>
       <ScrollView horizontal>
         <Card style={layout.cardSmallStyle}>
           <Text>Env Health</Text>
