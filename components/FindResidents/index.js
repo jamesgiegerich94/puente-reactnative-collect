@@ -23,27 +23,17 @@ const FindResidents = ({
   const [query, setQuery] = useState('');
   const [residents, setResidents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [offline, setOffline] = useState(false);
+
   useEffect(() => {
-    setOffline(true);
     fetchAsyncData();
-  }, [organization, offline]);
+  }, [organization]);
 
   const fetchAsyncData = () => {
     setLoading(true);
     getData('residentData').then((residentData) => {
       if (residentData) {
-        let offlineData = [];
-        getData('offlineIDForms').then((offlineResidentData) => {
-          if (offlineResidentData !== null) {
-            Object.entries(offlineResidentData).forEach(([key, value]) => { // eslint-disable-line
-              offlineData = offlineData.concat(value.localObject);
-            });
-          }
-          const allData = residentData.concat(offlineData);
-          setData(allData || []);
-          setResidents(allData.slice() || [].slice());
-        });
+        setData(residentData || []);
+        setResidents(residentData.slice() || [].slice());
       }
       setLoading(false);
     });
@@ -63,17 +53,8 @@ const FindResidents = ({
 
     storeData(records, 'residentData');
 
-    let offlineData = [];
-    await getData('offlineIDForms').then((offlineResidentData) => {
-      if (offlineResidentData !== null) {
-        Object.entries(offlineResidentData).forEach(([key, value]) => { // eslint-disable-line
-          offlineData = offlineData.concat(value.localObject);
-        });
-      }
-    });
-    const allData = records.concat(offlineData);
-    setData(allData);
-    setResidents(allData.slice());
+    setData(records);
+    setResidents(records.slice());
     setLoading(false);
   };
 

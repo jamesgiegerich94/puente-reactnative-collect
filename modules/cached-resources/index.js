@@ -7,7 +7,6 @@ import {
 import {
   postIdentificationForm,
   postSupplementaryForm,
-  postOfflineForms,
   postHousehold,
   postHouseholdWithRelation
 } from './post';
@@ -19,7 +18,6 @@ export {
   getTasksAsync,
   postIdentificationForm,
   postSupplementaryForm,
-  postOfflineForms,
   postHousehold,
   postHouseholdWithRelation
 };

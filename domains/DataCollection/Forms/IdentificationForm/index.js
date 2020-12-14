@@ -5,8 +5,12 @@ import {
 } from 'react-native';
 import { Formik } from 'formik';
 
-import { postIdentificationForm } from '../../../../modules/cached-resources';
+import { postObjectsToClass } from '../../../../services/parse/crud';
 
+import { postIdentificationForm } from '../../../../modules/cached-resources';
+import { storeData } from '../../../../modules/async-storage';
+import checkOnlineStatus from '../../../../modules/offline';
+import { generateRandomID, isEmpty } from '../../../../modules/utils';
 import { layout } from '../../../../modules/theme';
 import I18n from '../../../../modules/i18n';
 
@@ -108,14 +112,14 @@ const IdentificationForm = ({
               {formikProps.isSubmitting ? (
                 <ActivityIndicator />
               ) : (
-                  <PaperButton
-                    onPressEvent={formikProps.handleSubmit}
-                    buttonText={I18n.t('global.submit')}
-                  />
-                  // <Button icon="human" onPress={formikProps.handleSubmit}>
-                  //   <Text>Submit</Text>
-                  // </Button>
-                )}
+                <PaperButton
+                  onPressEvent={formikProps.handleSubmit}
+                  buttonText={I18n.t('global.submit')}
+                />
+              // <Button icon="human" onPress={formikProps.handleSubmit}>
+              //   <Text>Submit</Text>
+              // </Button>
+              )}
             </View>
           )}
         </Formik>

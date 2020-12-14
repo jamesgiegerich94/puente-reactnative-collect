@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { Headline, Button, Searchbar } from 'react-native-paper';
 import { Spinner } from 'native-base';
 
@@ -26,17 +26,8 @@ const ResidentIdSearchbar = ({ surveyee, setSurveyee, surveyingOrganization }) =
     setLoading(true);
     getData('residentData').then((residentData) => {
       if (residentData) {
-        let offlineData = [];
-        getData('offlineIDForms').then((offlineResidentData) => {
-          if (offlineResidentData !== null) {
-            Object.entries(offlineResidentData).forEach(([key, value]) => { //eslint-disable-line
-              offlineData = offlineData.concat(value.localObject);
-            });
-          }
-          const allData = residentData.concat(offlineData);
-          setData(allData || []);
-          setResidents(allData.slice() || [].slice());
-        });
+        setData(residentData || []);
+        setResidents(residentData.slice() || [].slice());
       }
       setLoading(false);
     });
@@ -52,17 +43,9 @@ const ResidentIdSearchbar = ({ surveyee, setSurveyee, surveyingOrganization }) =
       parseParam: surveyingOrganization,
     };
     const records = await residentQuery(queryParams);
-    let offlineData = [];
-    await getData('offlineIDForms').then((offlineResidentData) => {
-      if (offlineResidentData !== null) {
-        Object.entries(offlineResidentData).forEach(([key, value]) => { //eslint-disable-line
-          offlineData = offlineData.concat(value.localObject);
-        });
-      }
-    });
-    const allData = records.concat(offlineData);
-    setData(allData);
-    setResidents(allData.slice());
+
+    setData(records);
+    setResidents(records.slice());
     setLoading(false);
   };
 
@@ -92,24 +75,7 @@ const ResidentIdSearchbar = ({ surveyee, setSurveyee, surveyingOrganization }) =
   };
 
   const renderItem = ({ item }) => (
-    <View>
-      <Button onPress={() => onSelectSurveyee(item)} contentStyle={{ marginRight: 5 }}>
-        <Text style={{ marginRight: 10 }}>{`${item?.fname} ${item?.lname}`}</Text>
-        {/* offline IDform */}
-        {item.objectId.includes('PatientID-') && (
-          <View style={{
-            backgroundColor: '#f8380e',
-            width: 1,
-            height: 10,
-            paddingLeft: 10,
-            marginTop: 'auto',
-            marginBottom: 'auto',
-            borderRadius: 20
-          }}
-          />
-        )}
-      </Button>
-    </View>
+    <Button onPress={() => onSelectSurveyee(item)}>{`${item?.fname} ${item?.lname}`}</Button>
   );
 
   return (
