@@ -9,8 +9,8 @@ install:
 
 script:
   - npm ci --no-optional
-  # - npm run lint-fix
+  - npm run lint-fix
   - npm run test-run
-  # - codecov
+  - codecov
 
 
