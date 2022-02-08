@@ -14,7 +14,7 @@ import ResidentPage from './Resident/ResidentPage';
 
 const FindResidents = ({
   selectPerson, setSelectPerson, organization, puenteForms, navigateToNewRecord,
-  surveyee, setSurveyee, setView
+  surveyee, setSurveyee, setView, scrollViewScroll, setScrollViewScroll
 }) => {
   const [query, setQuery] = useState('');
   const [residentsData, setResidentsData] = useState([]);
@@ -25,7 +25,7 @@ const FindResidents = ({
 
   useEffect(() => {
     checkOnlineStatus().then(async (connected) => {
-      if (connected) fetchData(true, ''); 
+      if (connected) fetchData(true, '');
       if (!connected) fetchData(false, '');
     });
   }, [organization]);
@@ -153,6 +153,9 @@ const FindResidents = ({
           surveyee={surveyee}
           setSurveyee={setSurveyee}
           setView={setView}
+          scrollViewScroll={scrollViewScroll}
+          setScrollViewScroll={setScrollViewScroll}
+          surveyingOrganization={organization}
         />
       )}
     </View>

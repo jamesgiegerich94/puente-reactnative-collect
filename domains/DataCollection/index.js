@@ -260,6 +260,8 @@ const DataCollection = ({ navigation }) => {
                       setSurveyee={setSurveyee}
                       navigateToRoot={navigateToRoot}
                       setView={setView}
+                      scrollViewScroll={scrollViewScroll}
+                      setScrollViewScroll={setScrollViewScroll}
                     />
                   </View>
                 )}

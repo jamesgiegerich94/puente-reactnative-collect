@@ -16,7 +16,8 @@ import Household from './Housheold';
 
 const ResidentPage = ({
   fname, lname, nickname, city, picture, selectPerson, setSelectPerson,
-  puenteForms, navigateToNewRecord, setSurveyee, setView
+  puenteForms, navigateToNewRecord, setSurveyee, setView, scrollViewScroll, setScrollViewScroll,
+  surveyingOrganization
 }) => {
   const [pictureUrl, setPictureUrl] = useState();
   const [demographics, setDemographics] = useState(true);
@@ -97,6 +98,9 @@ const ResidentPage = ({
             province={selectPerson.province}
             license={selectPerson.license}
             selectPerson={selectPerson}
+            scrollViewScroll={scrollViewScroll}
+            setScrollViewScroll={setScrollViewScroll}
+            surveyingOrganization={surveyingOrganization}
           />
         )
       }

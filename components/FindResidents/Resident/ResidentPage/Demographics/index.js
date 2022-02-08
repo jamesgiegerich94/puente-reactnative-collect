@@ -1,40 +1,58 @@
-import React from 'react';
+import { Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
 import {
+  Keyboard,
   StyleSheet,
   View
 } from 'react-native';
-import {
-  Text,
-} from 'react-native-paper';
-
-import I18n from '../../../../../modules/i18n';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import PaperInputPicker from '../../../../FormikFields/PaperInputPicker';
+import configArray from './config/config';
 
 const Demographics = ({
-  dob, community, province, city, license
-}) => (
-  <View style={styles.container}>
-    <Text style={styles.topLabel}>
-      {I18n.t('findResident.residentPage.demographics.dob')}
-      {` ${dob}`}
-    </Text>
-    <Text style={styles.labels}>
-      {I18n.t('findResident.residentPage.demographics.city')}
-      {` ${city}`}
-    </Text>
-    <Text style={styles.labels}>
-      {I18n.t('findResident.residentPage.demographics.community')}
-      {` ${community}`}
-    </Text>
-    <Text style={styles.labels}>
-      {I18n.t('findResident.residentPage.demographics.province')}
-      {` ${province}`}
-    </Text>
-    <Text style={styles.labels}>
-      {I18n.t('findResident.residentPage.demographics.license')}
-      {` ${license}`}
-    </Text>
-  </View>
-);
+  surveyingOrganization, dob, city, community, province,
+  scrollViewScroll, setScrollViewScroll
+}) => {
+  const [inputs, setInputs] = useState([]);
+
+  useEffect(() => {
+    setInputs(configArray.fields);
+  }, [inputs]);
+
+  return (
+    <View style={styles.container}>
+
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <Formik
+          initialValues={{}}
+          onSubmit={() => {
+            console.log('submitting');
+          }}
+        >
+          {(formikProps) => (
+            <View>
+              {inputs.length != 0 && inputs.map((result) => (
+                <View key={result.formikKey}>
+                  <PaperInputPicker
+                    data={result}
+                    formikProps={formikProps}
+                    surveyingOrganization={surveyingOrganization}
+                    scrollViewScroll={scrollViewScroll}
+                    setScrollViewScroll={setScrollViewScroll}
+                    customForm={false}
+                  />
+                </View>
+              ))}
+            </View>
+          )}
+
+        </Formik>
+      </TouchableWithoutFeedback>
+
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     margin: 20
