@@ -24,7 +24,7 @@ const Demographics = ({
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <Formik
-          initialValues={{}}
+          initialValues={{  }}
           onSubmit={() => {
             console.log('submitting');
           }}
