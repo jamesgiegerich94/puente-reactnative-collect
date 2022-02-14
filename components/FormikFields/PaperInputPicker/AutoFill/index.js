@@ -40,7 +40,7 @@ export default class AutoFill extends Component {
     if (query === '') {
       return [];
     }
-
+   
     const { fields } = this.state;
     // making a case insensitive regular expression to get similar value from the film json
     const regex = new RegExp(`${query.trim()}`, 'i');
@@ -52,10 +52,12 @@ export default class AutoFill extends Component {
     const fields = this.findField(query);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
     const {
-      label, translatedLabel, formikProps, formikKey, scrollViewScroll, setScrollViewScroll
+      label, translatedLabel, formikProps, formikKey, initialValue, scrollViewScroll, setScrollViewScroll
     } = this.props;
 
     const placeholder = I18n.t(label);
+
+
 
     return (
       <View style={styles.container}>
@@ -80,7 +82,7 @@ export default class AutoFill extends Component {
               // data to show in suggestion
               data={fields.length === 1 && comp(query, fields[0]) ? [] : fields}
               // default value if you want to set something in input
-              defaultValue={query}
+              defaultValue={query ? query : initialValue}
               /* onchange of the text changing the state of the query which will trigger
               the findFilm method to show the suggestions */
               onChangeText={(text) => {
@@ -126,7 +128,7 @@ export default class AutoFill extends Component {
               // data to show in suggestion
               data={fields.length === 1 && comp(query, fields[0]) ? [] : fields}
               // default value if you want to set something in input
-              defaultValue={query}
+              defaultValue={query ? query : initialValue}
               /* onchange of the text changing the state of the query which will trigger
               the findFilm method to show the suggestions */
               onChangeText={(text) => {

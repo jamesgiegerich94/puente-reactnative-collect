@@ -14,17 +14,25 @@ const Demographics = ({
   scrollViewScroll, setScrollViewScroll
 }) => {
   const [inputs, setInputs] = useState([]);
+  const initialValues = {
+    communityname: 'hmhm'
+  }
 
   useEffect(() => {
     setInputs(configArray.fields);
-  }, [inputs]);
+    // console.log(inputs)
+  }, []);
 
   return (
     <View style={styles.container}>
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <Formik
-          initialValues={{  }}
+          initialValues={{communityname: community, 
+                          city: city,
+                          province: province,
+                          dob: dob
+                        }}
           onSubmit={() => {
             console.log('submitting');
           }}
@@ -42,7 +50,8 @@ const Demographics = ({
                     customForm={false}
                   />
                 </View>
-              ))}
+              )
+              )}
             </View>
           )}
 

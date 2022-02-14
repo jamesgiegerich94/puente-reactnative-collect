@@ -35,6 +35,7 @@ const PaperInputPicker = ({
 
   const translatedLabel = customForm ? label : I18n.t(label);
   const translatedLabelSide = customForm ? sideLabel : I18n.t(sideLabel);
+  const dateOfBirth = values[formikKey].split('/', 3); // ACCOUNT FOR NULL DOB
 
   const addArrayVal = (result) => {
     if (values[formikKey] || values[formikKey] === []) {
@@ -49,6 +50,12 @@ const PaperInputPicker = ({
   const [image, setImage] = React.useState(null);
 
   const [additionalQuestions, setAdditionalQuestions] = React.useState([]);
+
+  React.useEffect(() => {
+    // setInputs(configArray.fields);
+    console.log(values[formikKey])
+
+  }, [data]);
 
   return (
     <>
@@ -321,6 +328,7 @@ const PaperInputPicker = ({
             formikProps={formikProps}
             formikKey={formikKey}
             label={label}
+            initialValue={values[formikKey]}
             translatedLabel={translatedLabel}
             scrollViewScroll={scrollViewScroll}
             setScrollViewScroll={setScrollViewScroll}
@@ -336,6 +344,7 @@ const PaperInputPicker = ({
             parameter={data.parameter}
             formikProps={formikProps}
             formikKey={formikKey}
+            
             label={label}
             translatedLabel={translatedLabel}
             scrollViewScroll={scrollViewScroll}
@@ -411,6 +420,7 @@ const PaperInputPicker = ({
                 label={customForm ? result.label : I18n.t(result.label)}
                 onChangeText={handleChange(result.value)}
                 onBlur={handleBlur(result.value)}
+                defaultValue={formikKey == 'dob' ? dateOfBirth[result.index] : ''}
                     {...rest} //eslint-disable-line
                 mode="outlined"
                 keyboardType="numeric"
