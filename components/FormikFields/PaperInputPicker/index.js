@@ -6,7 +6,7 @@ import {
   Button, Headline,
   TextInput,
 } from 'react-native-paper';
-
+import _ from 'lodash';
 import I18n from '../../../modules/i18n';
 import { layout, theme } from '../../../modules/theme';
 import UseCameraRoll from '../../Multimedia/CameraRoll';
@@ -35,7 +35,7 @@ const PaperInputPicker = ({
 
   const translatedLabel = customForm ? label : I18n.t(label);
   const translatedLabelSide = customForm ? sideLabel : I18n.t(sideLabel);
-  const dateOfBirth = values[formikKey].split('/', 3); // ACCOUNT FOR NULL DOB
+  // const dateOfBirth = values[formikKey].split('/', 3); // ACCOUNT FOR NULL DOB
 
   const addArrayVal = (result) => {
     if (values[formikKey] || values[formikKey] === []) {
@@ -420,7 +420,7 @@ const PaperInputPicker = ({
                 label={customForm ? result.label : I18n.t(result.label)}
                 onChangeText={handleChange(result.value)}
                 onBlur={handleBlur(result.value)}
-                defaultValue={formikKey == 'dob' ? dateOfBirth[result.index] : ''}
+                defaultValue={ _.isEmpty(formikProps.values)? '' : values[formikKey][result.index]}
                     {...rest} //eslint-disable-line
                 mode="outlined"
                 keyboardType="numeric"

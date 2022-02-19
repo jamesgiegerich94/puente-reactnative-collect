@@ -1,10 +1,13 @@
 import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
+import _ from 'lodash';
+import I18n from '../../../../../modules/i18n';
 import {
   Keyboard,
   StyleSheet,
   View
 } from 'react-native';
+import PaperButton from '../../../../../components/Button';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import PaperInputPicker from '../../../../FormikFields/PaperInputPicker';
 import configArray from './config/config';
@@ -14,9 +17,8 @@ const Demographics = ({
   scrollViewScroll, setScrollViewScroll
 }) => {
   const [inputs, setInputs] = useState([]);
-  const initialValues = {
-    communityname: 'hmhm'
-  }
+  const dateOfBirth = _.isEmpty(dob)? '': dob.split('/', 3); 
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     setInputs(configArray.fields);
@@ -31,7 +33,7 @@ const Demographics = ({
           initialValues={{communityname: community, 
                           city: city,
                           province: province,
-                          dob: dob
+                          dob: dateOfBirth
                         }}
           onSubmit={() => {
             console.log('submitting');
@@ -52,9 +54,18 @@ const Demographics = ({
                 </View>
               )
               )}
+            {submitting ? (
+                <ActivityIndicator />
+              ) : (
+                <PaperButton
+                  onPressEvent={formikProps.handleSubmit}
+                  buttonText={_.isEmpty(formikProps.values) ? I18n.t('global.emptyForm') : I18n.t('assetForms.createAsset')}
+                  icon={_.isEmpty(formikProps.values) ? 'alert-octagon' : 'plus'}
+                  style={{ backgroundColor: _.isEmpty(formikProps.values) ? 'red' : 'green' }}
+                />
+              )}  
             </View>
           )}
-
         </Formik>
       </TouchableWithoutFeedback>
 
