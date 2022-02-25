@@ -15,7 +15,7 @@ import Forms from './Forms';
 import Household from './Housheold';
 
 const ResidentPage = ({
-  fname, lname, nickname, city, picture, selectPerson, setSelectPerson,
+  fname, lname, age, nickname, city, picture, selectPerson, setSelectPerson,
   puenteForms, navigateToNewRecord, setSurveyee, setView, scrollViewScroll, setScrollViewScroll,
   surveyingOrganization
 }) => {
@@ -101,6 +101,11 @@ const ResidentPage = ({
             scrollViewScroll={scrollViewScroll}
             setScrollViewScroll={setScrollViewScroll}
             surveyingOrganization={surveyingOrganization}
+            fname={fname}
+            lname={lname}
+            age={age}
+            nickname={nickname}
+            sex = {selectPerson.sex}
           />
         )
       }

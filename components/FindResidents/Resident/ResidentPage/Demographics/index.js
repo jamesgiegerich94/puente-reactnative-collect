@@ -1,4 +1,6 @@
 import { Formik } from 'formik';
+import { getData } from '../../../../../modules/async-storage';
+import surveyingUserFailsafe from '../../../../../domains/DataCollection/Forms/utils';
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import I18n from '../../../../../modules/i18n';
@@ -8,36 +10,109 @@ import {
   View
 } from 'react-native';
 import PaperButton from '../../../../../components/Button';
+import { isEmpty } from 'lodash';
+import yupValidationPicker from '../../../../FormikFields/YupValidation';
+import { postIdentificationForm } from '../../../../../modules/cached-resources';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import PaperInputPicker from '../../../../FormikFields/PaperInputPicker';
 import configArray from './config/config';
+import { ActivityIndicator } from 'react-native-paper';
 
 const Demographics = ({
   surveyingOrganization, dob, city, community, province,
-  scrollViewScroll, setScrollViewScroll
+  scrollViewScroll, setScrollViewScroll, age, fname, lname,
+  nickname, sex, telephonenumber, marriagestatus, occupation,
+  educationLevel,  // setSelectedForm, setSurveyee, surveyingUser
 }) => {
+
+  useEffect(() => {
+    // setValidationSchema(yupValidationPicker(configArray));
+  }, []);
+
   const [inputs, setInputs] = useState([]);
-  const dateOfBirth = _.isEmpty(dob)? '': dob.split('/', 3); 
+  const dateOfBirth = dob?.split('/', 3) || ''; 
   const [submitting, setSubmitting] = useState(false);
+  const [validationSchema, setValidationSchema] = useState();
+  const [submissionError, setSubmissionError] = useState(false);
 
   useEffect(() => {
     setInputs(configArray.fields);
-    // console.log(inputs)
-  }, []);
+    // setValidationSchema(yupValidationPicker(configArray));
+  }, [setInputs, configArray]);
 
   return (
     <View style={styles.container}>
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <Formik
-          initialValues={{communityname: community, 
+          initialValues={{
+                          communityname: community, 
                           city: city,
                           province: province,
-                          dob: dateOfBirth
+                          dob: dateOfBirth,
+                          age: age,
+                          fname: fname,
+                          lname: lname,
+                          nickname: nickname,
+                          sex: sex
                         }}
-          onSubmit={() => {
-            console.log('submitting');
-          }}
+                        onSubmit={async (values,) => {
+                          setSubmitting(true);
+              
+                          const formObject = values;
+                          const user = await getData('currentUser');
+                          console.log(formObject);
+                          formObject.surveyingOrganization = surveyingOrganization || user.organization;
+                          formObject.surveyingUser = await surveyingUserFailsafe(user, surveyingUser, isEmpty);
+                          // formObject.appVersion = await getData('appVersion') || '';
+                          // formObject.phoneOS = Platform.OS || '';
+              
+                          // formObject.latitude = values.location?.latitude || 0;
+                          // formObject.longitude = values.location?.longitude || 0;
+                          // formObject.altitude = values.location?.altitude || 0;
+              
+                          formObject.dob = `${values.Month || '00'}/${values.Day || '00'}/${values.Year || '0000'}`;
+              
+                          // formObject.searchIndex = [
+                          //   values.fname,
+                          //   values.lname,
+                          //   // values.nickname,
+                          //   values.communityname
+                          // ]
+                          //   .filter((result) => result)
+                          //   .map((result) => result.toLowerCase().trim());
+              
+                          // formObject.fullTextSearchIndex = formObject.searchIndex.join(' ');
+              
+                          const valuesToPrune = ['Month', 'Day', 'Year'];
+                          valuesToPrune.forEach((value) => {
+                            delete formObject[value];
+                          });
+              
+                          const submitAction = () => {
+                            setTimeout(() => {
+                              setSelectedForm('');
+                              setSubmitting(false);
+                            }, 1000);
+                          };
+                          const postParams = {
+                            parseClass: 'SurveyData',
+                            parseUser: user.objectId,
+                            localObject: formObject
+                          };
+                          postIdentificationForm(postParams).then((surveyee) => {
+                            setSurveyee(surveyee);
+                            submitAction();
+                          }, () => {
+                            // perhaps an alert to let the user know there was an error
+                            setSubmitting(false);
+                            setSubmissionError(true);
+                          });
+                        }}
+          validationSchema={validationSchema}
+          // only validate on submit, errors persist after fixing
+          validateOnBlur={false}
+          validateOnChange={false}
         >
           {(formikProps) => (
             <View>

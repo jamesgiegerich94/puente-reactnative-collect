@@ -54,7 +54,8 @@ const PaperInputPicker = ({
   React.useEffect(() => {
     // setInputs(configArray.fields);
     console.log(values[formikKey])
-
+    if(fieldType == 'select')
+      setFieldValue(values[formikKey])
   }, [data]);
 
   return (
@@ -65,6 +66,7 @@ const PaperInputPicker = ({
             && <Text style={stylesDefault.label}>{translatedLabel}</Text>}
           <TextInput
             label={translatedLabel.length > 30 ? '' : translatedLabel}
+            defaultValue={_.isEmpty(formikProps.values)? '': values[formikKey]}
             onChangeText={handleChange(formikKey)}
             onBlur={handleBlur(formikKey)}
             {...rest} //eslint-disable-line
@@ -95,6 +97,7 @@ const PaperInputPicker = ({
             {...rest} //eslint-disable-line
             mode="outlined"
             keyboardType="numeric"
+            defaultValue={_.isEmpty(formikProps.values)? '': values[formikKey]}
             theme={stylesPaper}
             style={stylesDefault.label}
           />

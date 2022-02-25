@@ -142,6 +142,7 @@ const FindResidents = ({
         <ResidentPage
           fname={selectPerson.fname}
           lname={selectPerson.lname}
+          age={selectPerson.age}
           nickname={selectPerson.nickname}
           city={selectPerson.city}
           license={selectPerson.license}

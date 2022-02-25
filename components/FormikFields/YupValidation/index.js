@@ -6,7 +6,7 @@ export default function yupValidationPicker(fields) {
   let validationSchema = yup.object().shape({});
   fields.forEach((result) => {
     const {
-      label, formikKey, fieldType, validation, options
+      label, formikKey, fieldType, validation, options, index
     } = result;
     if (validation) {
       if (fieldType === 'input' || fieldType === 'numberInput' || fieldType === 'select'
