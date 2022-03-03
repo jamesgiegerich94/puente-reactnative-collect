@@ -25,6 +25,7 @@ const ResidentPage = ({
   const [household, setHousehold] = useState(false);
 
   useEffect(() => {
+    // console.log(selectPerson)
     const pic = picture;
     if (pic) {
       setPictureUrl({ uri: pic.url });
@@ -106,6 +107,16 @@ const ResidentPage = ({
             age={age}
             nickname={nickname}
             sex = {selectPerson.sex}
+            subcounty={selectPerson.subcounty}
+            region={selectPerson.region}
+            country={selectPerson.country}
+            location={selectPerson.location}
+            photo={selectPerson.photo}
+            household={selectPerson.household}
+            telephonenumber={selectPerson.telephoneNumber}
+            marriagestatus={selectPerson.marriageStatus}
+            occupation={selectPerson.occupation}
+            educationLevel={selectPerson.educationLevel}
           />
         )
       }

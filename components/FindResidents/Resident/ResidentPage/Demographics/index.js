@@ -17,12 +17,14 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import PaperInputPicker from '../../../../FormikFields/PaperInputPicker';
 import configArray from './config/config';
 import { ActivityIndicator } from 'react-native-paper';
+import { region } from 'expo-localization';
 
 const Demographics = ({
   surveyingOrganization, dob, city, community, province,
   scrollViewScroll, setScrollViewScroll, age, fname, lname,
   nickname, sex, telephonenumber, marriagestatus, occupation,
-  educationLevel,  // setSelectedForm, setSurveyee, surveyingUser
+  educationLevel, subcounty, region, country, location,
+  photo, household // setSelectedForm, setSurveyee, surveyingUser
 }) => {
 
   useEffect(() => {
@@ -54,7 +56,17 @@ const Demographics = ({
                           fname: fname,
                           lname: lname,
                           nickname: nickname,
-                          sex: sex
+                          sex: sex,
+                          subcounty: subcounty,
+                          Region: region,
+                          Country: country,
+                          location: location,
+                          photo: photo,
+                          household: household,
+                          telephoneNumber: telephonenumber,
+                          marriageStatus: marriagestatus,
+                          occupation: occupation,
+                          educationLevel: educationLevel
                         }}
                         onSubmit={async (values,) => {
                           setSubmitting(true);

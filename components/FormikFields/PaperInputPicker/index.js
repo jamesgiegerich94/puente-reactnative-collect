@@ -53,8 +53,8 @@ const PaperInputPicker = ({
 
   React.useEffect(() => {
     // setInputs(configArray.fields);
-    console.log(values[formikKey])
-    if(fieldType == 'select')
+    // console.log(values)
+    if(fieldType == 'select' && values[formikKey])
       setFieldValue(values[formikKey])
   }, [data]);
 
@@ -331,7 +331,7 @@ const PaperInputPicker = ({
             formikProps={formikProps}
             formikKey={formikKey}
             label={label}
-            initialValue={values[formikKey]}
+            initialValue={values[formikKey]? values[formikKey]: ''}
             translatedLabel={translatedLabel}
             scrollViewScroll={scrollViewScroll}
             setScrollViewScroll={setScrollViewScroll}
@@ -423,7 +423,7 @@ const PaperInputPicker = ({
                 label={customForm ? result.label : I18n.t(result.label)}
                 onChangeText={handleChange(result.value)}
                 onBlur={handleBlur(result.value)}
-                defaultValue={ _.isEmpty(formikProps.values)? '' : values[formikKey][result.index]}
+                defaultValue={ _.isEmpty(values[formikKey]) ? '' : values[formikKey][result.index]}
                     {...rest} //eslint-disable-line
                 mode="outlined"
                 keyboardType="numeric"

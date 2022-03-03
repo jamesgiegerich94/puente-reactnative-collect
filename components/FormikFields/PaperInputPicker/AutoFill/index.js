@@ -27,6 +27,7 @@ export default class AutoFill extends Component {
 
   async componentDidMount() {
     const { parameter } = this.props;
+    console.log(parameter)
     const data = await getData('autofill_information');
     const result = data[parameter];
     this.setState({
@@ -128,7 +129,7 @@ export default class AutoFill extends Component {
               // data to show in suggestion
               data={fields.length === 1 && comp(query, fields[0]) ? [] : fields}
               // default value if you want to set something in input
-              defaultValue={query ? query : initialValue}
+              defaultValue={query ? query : 'inititalValue'}
               /* onchange of the text changing the state of the query which will trigger
               the findFilm method to show the suggestions */
               onChangeText={(text) => {
