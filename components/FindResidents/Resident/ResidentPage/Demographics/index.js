@@ -24,7 +24,7 @@ const Demographics = ({
   scrollViewScroll, setScrollViewScroll, age, fname, lname,
   nickname, sex, telephonenumber, marriagestatus, occupation,
   educationLevel, subcounty, region, country, location,
-  photo, household // setSelectedForm, setSurveyee, surveyingUser
+  photo, householdId // setSelectedForm, setSurveyee, surveyingUser
 }) => {
 
   useEffect(() => {
@@ -58,11 +58,11 @@ const Demographics = ({
                           nickname: nickname,
                           sex: sex,
                           subcounty: subcounty,
-                          Region: region,
-                          Country: country,
+                          region: region,
+                          country: country,
                           location: location,
-                          photo: photo,
-                          household: household,
+                          photoFile: photo,
+                          householdId: householdId,
                           telephoneNumber: telephonenumber,
                           marriageStatus: marriagestatus,
                           occupation: occupation,

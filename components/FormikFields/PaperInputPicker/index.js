@@ -53,9 +53,13 @@ const PaperInputPicker = ({
 
   React.useEffect(() => {
     // setInputs(configArray.fields);
-    // console.log(values)
+    console.log(formikProps.values)
     if(fieldType == 'select' && values[formikKey])
       setFieldValue(values[formikKey])
+    if(fieldType == 'photo' && values[formikKey])
+     { setImage(values[formikKey])
+      console.log(formikKey)  }  
+
   }, [data]);
 
   return (
@@ -360,6 +364,7 @@ const PaperInputPicker = ({
       )}
       {fieldType === 'geolocation' && (
         <Geolocation
+          values={values}
           errors={errors}
           formikKey={formikKey}
           setFieldValue={setFieldValue}

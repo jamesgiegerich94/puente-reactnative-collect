@@ -1,5 +1,5 @@
 import { Spinner } from 'native-base';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View
@@ -15,10 +15,16 @@ import { fulfillWithTimeLimit } from '../../../../modules/utils';
 import PaperButton from '../../../Button';
 import PopupError from '../../../PopupError';
 
-const Geolocation = ({ errors, formikKey, setFieldValue }) => {
+const Geolocation = ({ errors, formikKey, setFieldValue, values }) => {
   const [location, setLocation] = useState({ latitude: 0, longitude: 0, altitude: 0 });
   const [locationLoading, setLocationLoading] = useState(false);
   const [submissionError, setSubmissionError] = useState(false);
+
+  useEffect(()=> {
+    if (values.location){
+      setLocation({latitude: values.location.latitude, longitude: values.location.longitude})
+    }
+  },[]) 
 
   const handleLocation = async () => {
     setLocationLoading(true);

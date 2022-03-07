@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View
@@ -14,25 +14,39 @@ import SmallCardsCarousel from '../../../../Cards/SmallCardsCarousel';
 
 const Forms = ({
   puenteForms, navigateToNewRecord, surveyee, setView
-}) => (
-  <View style={styles.container}>
-    <Title style={styles.title}>{I18n.t('findResident.residentPage.forms.completedForms')}</Title>
-    <Text style={styles.category}>{I18n.t('findResident.residentPage.forms.formCategory')}</Text>
-    <View
-      style={styles.horizontalLine}
-    />
-    <ComingSoonSVG width={200} height={200} />
-    <Text>{I18n.t('findResident.residentPage.forms.comingSoon')}</Text>
-    <Title style={styles.title}>{I18n.t('findResident.residentPage.forms.suggestedForms')}</Title>
-    <SmallCardsCarousel
-      puenteForms={puenteForms}
-      navigateToNewRecord={navigateToNewRecord}
-      surveyee={surveyee}
-      setView={setView}
-      setUser
-    />
-  </View>
-);
+}) => {
+
+useEffect(()=>{
+  // console.log(puenteForms)
+}, []);
+
+return (
+    <View style={styles.container}>
+      <Title style={styles.title}>{I18n.t('findResident.residentPage.forms.completedForms')}</Title>
+      <Text style={styles.category}>{I18n.t('findResident.residentPage.forms.formCategory')}</Text>
+      <View
+        style={styles.horizontalLine}
+      />
+      <SmallCardsCarousel
+        puenteForms={puenteForms}
+        navigateToNewRecord={navigateToNewRecord}
+        surveyee={surveyee}
+        setView={setView}
+        setUser
+      />
+      {/* <ComingSoonSVG width={200} height={200} /> */}
+      <Text>{I18n.t('findResident.residentPage.forms.comingSoon')}</Text>
+      <Title style={styles.title}>{I18n.t('findResident.residentPage.forms.suggestedForms')}</Title>
+      <SmallCardsCarousel
+        puenteForms={puenteForms}
+        navigateToNewRecord={navigateToNewRecord}
+        surveyee={surveyee}
+        setView={setView}
+        setUser
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
