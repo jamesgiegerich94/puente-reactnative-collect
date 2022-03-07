@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Platform,
   View
 } from 'react-native';
 import { Button, Text } from 'react-native-paper';
@@ -10,6 +11,8 @@ import { Button, Text } from 'react-native-paper';
 import ErrorPicker from '../../../../components/FormikFields/ErrorPicker';
 import PaperInputPicker from '../../../../components/FormikFields/PaperInputPicker';
 import yupValidationPicker from '../../../../components/FormikFields/YupValidation';
+import PopupError from '../../../../components/PopupError';
+import { getData } from '../../../../modules/async-storage';
 import { postSupplementaryForm } from '../../../../modules/cached-resources';
 import I18n from '../../../../modules/i18n';
 import { layout, theme } from '../../../../modules/theme';
@@ -18,7 +21,7 @@ import surveyingUserFailsafe from '../utils';
 import envConfig from './configs/envhealth.config';
 import medConfig from './configs/medical-evaluation.config';
 import vitalsConfig from './configs/vitals.config';
-import { addSelectTextInputs, vitalsBloodPressue } from './utils';
+import { addSelectTextInputs, cleanLoopSubmissions, vitalsBloodPressue } from './utils';
 
 const SupplementaryForm = ({
   navigation, selectedForm, setSelectedForm, surveyee, surveyingUser, surveyingOrganization,
@@ -28,6 +31,8 @@ const SupplementaryForm = ({
   const [photoFile, setPhotoFile] = useState('State Photo String');
   const [validationSchema, setValidationSchema] = useState();
   const [submitting, setSubmitting] = useState(false);
+  const [loopsAdded, setLoopsAdded] = useState(0);
+  const [submissionError, setSubmissionError] = useState(false);
 
   const toRoot = () => {
     navigation.navigate('Root');
@@ -46,7 +51,9 @@ const SupplementaryForm = ({
     if (selectedForm === 'vitals') {
       setConfig(vitalsConfig);
     }
-    if (selectedForm === 'custom') setConfig(customForm);
+    if (selectedForm === 'custom') {
+      setConfig(customForm);
+    }
   }, [selectedForm, config]);
 
   return (
@@ -57,19 +64,29 @@ const SupplementaryForm = ({
         setPhotoFile('Submitted Photo String');
 
         const formObject = values;
-        formObject.surveyingUser = await surveyingUserFailsafe(surveyingUser, isEmpty);
-        formObject.surveyingOrganization = surveyingOrganization;
+        const user = await getData('currentUser');
+
+        formObject.surveyingUser = await surveyingUserFailsafe(user, surveyingUser, isEmpty);
+        formObject.surveyingOrganization = surveyingOrganization || user.organization;
+        formObject.appVersion = await getData('appVersion') || '';
+        formObject.phoneOS = Platform.OS || '';
 
         let formObjectUpdated = addSelectTextInputs(values, formObject);
         if (selectedForm === 'vitals') {
           formObjectUpdated = vitalsBloodPressue(values, formObjectUpdated);
         }
+
+        // clean looped form questions
+        formObjectUpdated = cleanLoopSubmissions(values, formObjectUpdated);
+
         const postParams = {
           parseParentClassID: surveyee.objectId,
           parseParentClass: 'SurveyData',
+          parseUser: user.objectId,
           parseClass: config.class,
           photoFile,
-          localObject: formObjectUpdated
+          localObject: formObjectUpdated,
+          loop: loopsAdded !== 0
         };
 
         if (selectedForm === 'custom') {
@@ -87,7 +104,6 @@ const SupplementaryForm = ({
             fields: fieldsArray,
             surveyingUser: formObject.surveyingUser,
             surveyingOrganization: formObject.surveyingOrganization
-
           };
         }
 
@@ -100,9 +116,11 @@ const SupplementaryForm = ({
 
         postSupplementaryForm(postParams).then(() => {
           submitAction();
-        }, () => {
+        }, (error) => {
+          console.log(error); // eslint-disable-line
           // perhaps an alert to let the user know there was an error
           setSubmitting(false);
+          setSubmissionError(true);
         });
       }}
       validationSchema={validationSchema}
@@ -118,6 +136,9 @@ const SupplementaryForm = ({
                 data={result}
                 formikProps={formikProps}
                 customForm={config.customForm}
+                config={config}
+                loopsAdded={loopsAdded}
+                setLoopsAdded={setLoopsAdded}
               />
             </View>
           ))}
@@ -142,6 +163,11 @@ const SupplementaryForm = ({
               {!surveyee.objectId && <Text>{I18n.t('supplementaryForms.attachResident')}</Text>}
             </Button>
           )}
+          <PopupError
+            error={submissionError}
+            setError={setSubmissionError}
+            errorMessage="submissionError.error"
+          />
         </View>
       )}
     </Formik>

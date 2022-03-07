@@ -10,7 +10,6 @@ import StorePinCode from '../../domains/Auth/PinCode/StorePinCode';
 import SignIn from '../../domains/Auth/SignIn';
 import SignUp from '../../domains/Auth/SignUp';
 import { theme } from '../../modules/theme';
-import { initialize } from '../../services/parse/auth';
 import BottomTabNavigator from './BottomTabNavigator.';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -19,14 +18,11 @@ const Stack = createStackNavigator();
 const { background } = theme.colors;
 
 const MainNavigation = () => {
-  React.useEffect(() => {
-    initialize();
-  });
   const { container } = styles;
   return (
     <View style={container}>
       {Platform.OS === 'ios' && <StatusBar />}
-      <NavigationContainer linking={LinkingConfiguration}>
+      <NavigationContainer linking={LinkingConfiguration} independent>
         <Stack.Navigator>
           <Stack.Screen name="Sign In" component={SignIn} options={{ headerShown: false }} />
           <Stack.Screen name="Sign Up" component={SignUp} options={{ headerShown: false }} />

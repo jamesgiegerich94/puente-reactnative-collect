@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -15,12 +15,11 @@ import {
 import * as yup from 'yup';
 
 import FormInput from '../../../components/FormikFields/FormInput';
+import Autofill from '../../../components/FormikFields/PaperInputPicker/AutoFill';
 import TermsModal from '../../../components/TermsModal';
-import { populateCache } from '../../../modules/cached-resources';
+import { UserContext } from '../../../context/auth.context';
 import I18n from '../../../modules/i18n';
-// STYLING
 import { theme } from '../../../modules/theme';
-import { retrieveSignUpFunction } from '../../../services/parse/auth';
 
 const validationSchema = yup.object().shape({
   firstname: yup
@@ -41,7 +40,7 @@ const validationSchema = yup.object().shape({
     .min(10, 'Seems a bit short..'),
   organization: yup
     .string()
-    .label('Username')
+    .label('Organization')
     .required(),
   password: yup
     .string()
@@ -59,10 +58,12 @@ const validationSchema = yup.object().shape({
 export default function SignUp({ navigation }) {
   const [checked, setChecked] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
-
+  const [scrollViewScroll, setScrollViewScroll] = React.useState();
+  const { register } = useContext(UserContext);
   const handleLogIn = () => {
     navigation.navigate('Sign In');
   };
+
   return (
     <KeyboardAvoidingView
       enabled
@@ -73,7 +74,11 @@ export default function SignUp({ navigation }) {
         <Button icon="arrow-left" width={100} style={{ paddingTop: 40 }} onPress={handleLogIn}>
           Back
         </Button>
-        <ScrollView style={{ backgroundColor: theme.colors.accent }}>
+        <ScrollView
+          style={{ backgroundColor: theme.colors.accent }}
+          keyboardShouldPersistTaps="never"
+          scrollEnabled={scrollViewScroll}
+        >
           <SafeAreaView style={{ marginTop: 10 }}>
             <Formik
               initialValues={{
@@ -85,11 +90,8 @@ export default function SignUp({ navigation }) {
                 } else if (values.password !== values.password2) {
                   alert(I18n.t('signUp.errorPassword')) // eslint-disable-line
                 } else {
-                  retrieveSignUpFunction(values)
-                    .then((user) => {
-                      populateCache(user);
-                      navigation.navigate('Root');
-                    }).catch((error) => {
+                  register(values)
+                    .then(() => navigation.navigate('Root')).catch((error) => {
                       // sign up failed alert user
                       console.log(`Error: ${error.code} ${error.message}`); // eslint-disable-line
                       alert(I18n.t('signUp.usernameError')); // eslint-disable-line
@@ -143,11 +145,14 @@ export default function SignUp({ navigation }) {
                     placeholder="Password Here"
                     secureTextEntry
                   />
-                  <FormInput
-                    label={I18n.t('signUp.organization')}
+                  <Autofill
+                    parameter="organization"
                     formikProps={formikProps}
                     formikKey="organization"
-                    placeholder="Puente"
+                    label="signUp.organization"
+                    translatedLabel={I18n.t('signUp.organization')}
+                    scrollViewScroll={scrollViewScroll}
+                    setScrollViewScroll={setScrollViewScroll}
                   />
                   <Button mode="text" theme={theme} color="#3E81FD" style={styles.serviceButton} onPress={() => setVisible(true)}>{I18n.t('signUp.termsOfService.view')}</Button>
                   <View style={styles.container}>
@@ -203,7 +208,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 10,
-    marginBottom: 60,
+    marginBottom: 100,
   },
   serviceButton: {
     marginLeft: 20,
@@ -221,6 +226,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 'auto',
     marginBottom: 'auto'
-
   },
 });
