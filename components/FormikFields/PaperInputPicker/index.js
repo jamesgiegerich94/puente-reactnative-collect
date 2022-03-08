@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import * as React from 'react';
 import {
   Image, Text, TouchableWithoutFeedback, View
@@ -6,7 +7,7 @@ import {
   Button, Headline,
   TextInput,
 } from 'react-native-paper';
-import _ from 'lodash';
+
 import I18n from '../../../modules/i18n';
 import { layout, theme } from '../../../modules/theme';
 import UseCameraRoll from '../../Multimedia/CameraRoll';
@@ -53,13 +54,10 @@ const PaperInputPicker = ({
 
   React.useEffect(() => {
     // setInputs(configArray.fields);
-    console.log(formikProps.values)
-    if(fieldType == 'select' && values[formikKey])
-      setFieldValue(values[formikKey])
-    if(fieldType == 'photo' && values[formikKey])
-     { setImage(values[formikKey])
-      console.log(formikKey)  }  
+    // console.log(formikProps.values)
+    if (fieldType === 'select' && values[formikKey]) setFieldValue(values[formikKey]);
 
+    if (fieldType === 'photo' && values[formikKey]) setImage(values[formikKey]);
   }, [data]);
 
   return (
@@ -70,7 +68,7 @@ const PaperInputPicker = ({
             && <Text style={stylesDefault.label}>{translatedLabel}</Text>}
           <TextInput
             label={translatedLabel.length > 30 ? '' : translatedLabel}
-            defaultValue={_.isEmpty(formikProps.values)? '': values[formikKey]}
+            defaultValue={_.isEmpty(formikProps.values) ? '' : values[formikKey]}
             onChangeText={handleChange(formikKey)}
             onBlur={handleBlur(formikKey)}
             {...rest} //eslint-disable-line
@@ -101,7 +99,7 @@ const PaperInputPicker = ({
             {...rest} //eslint-disable-line
             mode="outlined"
             keyboardType="numeric"
-            defaultValue={_.isEmpty(formikProps.values)? '': values[formikKey]}
+            defaultValue={_.isEmpty(formikProps.values) ? '' : values[formikKey]}
             theme={stylesPaper}
             style={stylesDefault.label}
           />
@@ -335,7 +333,7 @@ const PaperInputPicker = ({
             formikProps={formikProps}
             formikKey={formikKey}
             label={label}
-            initialValue={values[formikKey]? values[formikKey]: ''}
+            initialValue={values[formikKey] ? values[formikKey] : ''}
             translatedLabel={translatedLabel}
             scrollViewScroll={scrollViewScroll}
             setScrollViewScroll={setScrollViewScroll}
@@ -351,7 +349,6 @@ const PaperInputPicker = ({
             parameter={data.parameter}
             formikProps={formikProps}
             formikKey={formikKey}
-            
             label={label}
             translatedLabel={translatedLabel}
             scrollViewScroll={scrollViewScroll}
@@ -428,7 +425,7 @@ const PaperInputPicker = ({
                 label={customForm ? result.label : I18n.t(result.label)}
                 onChangeText={handleChange(result.value)}
                 onBlur={handleBlur(result.value)}
-                defaultValue={ _.isEmpty(values[formikKey]) ? '' : values[formikKey][result.index]}
+                defaultValue={_.isEmpty(values[formikKey]) ? '' : values[formikKey][result.index]}
                     {...rest} //eslint-disable-line
                 mode="outlined"
                 keyboardType="numeric"

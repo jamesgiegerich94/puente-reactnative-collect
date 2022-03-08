@@ -27,7 +27,7 @@ const ResidentPage = ({
   useEffect(() => {
     const pic = picture;
     if (pic) {
-      setPictureUrl({ uri: pic.url });
+      setPictureUrl({ uri: pic });
     }
   }, []);
 
@@ -105,7 +105,7 @@ const ResidentPage = ({
             lname={lname}
             age={age}
             nickname={nickname}
-            sex = {selectPerson.sex}
+            sex={selectPerson.sex}
             subcounty={selectPerson.subcounty}
             region={selectPerson.region}
             country={selectPerson.country}

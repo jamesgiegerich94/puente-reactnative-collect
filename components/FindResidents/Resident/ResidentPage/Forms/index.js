@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View
@@ -7,46 +7,38 @@ import {
   Text, Title
 } from 'react-native-paper';
 
-import ComingSoonSVG from '../../../../../assets/graphics/static/Adventurer.svg';
 import I18n from '../../../../../modules/i18n';
 import { theme } from '../../../../../modules/theme';
 import SmallCardsCarousel from '../../../../Cards/SmallCardsCarousel';
 
 const Forms = ({
   puenteForms, navigateToNewRecord, surveyee, setView
-}) => {
-
-useEffect(()=>{
-  // console.log(puenteForms)
-}, []);
-
-return (
-    <View style={styles.container}>
-      <Title style={styles.title}>{I18n.t('findResident.residentPage.forms.completedForms')}</Title>
-      <Text style={styles.category}>{I18n.t('findResident.residentPage.forms.formCategory')}</Text>
-      <View
-        style={styles.horizontalLine}
-      />
-      <SmallCardsCarousel
-        puenteForms={puenteForms}
-        navigateToNewRecord={navigateToNewRecord}
-        surveyee={surveyee}
-        setView={setView}
-        setUser
-      />
-      {/* <ComingSoonSVG width={200} height={200} /> */}
-      <Text>{I18n.t('findResident.residentPage.forms.comingSoon')}</Text>
-      <Title style={styles.title}>{I18n.t('findResident.residentPage.forms.suggestedForms')}</Title>
-      <SmallCardsCarousel
-        puenteForms={puenteForms}
-        navigateToNewRecord={navigateToNewRecord}
-        surveyee={surveyee}
-        setView={setView}
-        setUser
-      />
-    </View>
-  );
-};
+}) => (
+  <View style={styles.container}>
+    <Title style={styles.title}>{I18n.t('findResident.residentPage.forms.completedForms')}</Title>
+    <Text style={styles.category}>{I18n.t('findResident.residentPage.forms.formCategory')}</Text>
+    <View
+      style={styles.horizontalLine}
+    />
+    <SmallCardsCarousel
+      puenteForms={puenteForms}
+      navigateToNewRecord={navigateToNewRecord}
+      surveyee={surveyee}
+      setView={setView}
+      setUser
+    />
+    {/* <ComingSoonSVG width={200} height={200} /> */}
+    <Text>{I18n.t('findResident.residentPage.forms.comingSoon')}</Text>
+    <Title style={styles.title}>{I18n.t('findResident.residentPage.forms.suggestedForms')}</Title>
+    <SmallCardsCarousel
+      puenteForms={puenteForms}
+      navigateToNewRecord={navigateToNewRecord}
+      surveyee={surveyee}
+      setView={setView}
+      setUser
+    />
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
