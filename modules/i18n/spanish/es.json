@@ -355,6 +355,9 @@
     "attachForm": "Adjuntar una forma y un activo",
     "createAsset": "Crear un activo"
   },
+  "demographics":{
+    "updateForm": "Actualiza el formulario"
+  },
   "forms": {
     "successfullySubmitted": "Formulario entregado satisfactoriamente",
     "grabCoffee": "Buen trabajo, tómate un café",

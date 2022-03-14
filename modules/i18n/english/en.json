@@ -355,6 +355,9 @@
     "attachForm": "Attach a form and an asset",
     "createAsset": "Create an Asset"
   },
+  "demographics":{
+    "updateForm": "Update Form"
+  },
   "forms": {
     "successfullySubmitted": "Form successfully submitted",
     "grabCoffee": "Great job, grab yourself a coffee",

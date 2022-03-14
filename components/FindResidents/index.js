@@ -28,6 +28,7 @@ const FindResidents = ({
       if (connected) fetchData(true, '');
       if (!connected) fetchData(false, '');
     });
+    console.log(selectPerson);
   }, [organization]);
 
   const fetchOfflineData = () => {
@@ -146,7 +147,7 @@ const FindResidents = ({
           nickname={selectPerson.nickname}
           city={selectPerson.city}
           license={selectPerson.license}
-          picture={selectPerson.picture.url}
+          picture={selectPerson.picture? selectPerson.picture.url: ''}
           selectPerson={selectPerson}
           setSelectPerson={setSelectPerson}
           puenteForms={puenteForms}

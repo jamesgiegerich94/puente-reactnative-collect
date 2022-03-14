@@ -354,6 +354,9 @@
     "attachForm": "Tache yon Fòm Byen an",	
     "createAsset": "Kreye yon Byen"	
   },
+  "demographics":{
+    "updateForm": "Mete ajou fòm lan"
+  },
   "forms": {
     "successfullySubmitted": "Fòm soumèt avèk siksè",
     "grabCoffee": "Gwo travay, pwan tèt ou yon kafe",

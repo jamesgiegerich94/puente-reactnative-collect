@@ -11,7 +11,7 @@ import { ActivityIndicator } from 'react-native-paper';
 
 import surveyingUserFailsafe from '../../../../../domains/DataCollection/Forms/utils';
 import { getData } from '../../../../../modules/async-storage';
-import { postIdentificationForm } from '../../../../../modules/cached-resources';
+import { updateObject } from '../../../../../services/parse/crud';
 import I18n from '../../../../../modules/i18n';
 import PaperButton from '../../../../Button';
 import PaperInputPicker from '../../../../FormikFields/PaperInputPicker';
@@ -60,7 +60,7 @@ const Demographics = ({
           }}
           onSubmit={async (values,) => {
             setSubmitting(true);
-
+            console.log(values);
             const formObject = values;
             const user = await getData('currentUser');
             formObject.surveyingOrganization = surveyingOrganization || user.organization;
@@ -92,17 +92,17 @@ const Demographics = ({
 
             const submitAction = () => {
               setTimeout(() => {
-                setSelectedForm('');
+                // setSelectedForm('');
                 setSubmitting(false);
               }, 1000);
             };
             const postParams = {
               parseClass: 'SurveyData',
-              parseUser: user.objectId,
+              parseClassID: '',
               localObject: formObject
             };
-            postIdentificationForm(postParams).then((surveyee) => {
-              setSurveyee(surveyee);
+           updateObject(postParams).then((result) => {
+              console.log(result);
               submitAction();
             }, () => {
               // perhaps an alert to let the user know there was an error
@@ -133,7 +133,7 @@ const Demographics = ({
               ) : (
                 <PaperButton
                   onPressEvent={formikProps.handleSubmit}
-                  buttonText={_.isEmpty(formikProps.values) ? I18n.t('global.emptyForm') : I18n.t('assetForms.createAsset')}
+                  buttonText={_.isEmpty(formikProps.values) ? I18n.t('global.emptyForm') : I18n.t('demographics.updateForm')}
                   icon={_.isEmpty(formikProps.values) ? 'alert-octagon' : 'plus'}
                   style={{ backgroundColor: _.isEmpty(formikProps.values) ? 'red' : 'green' }}
                 />

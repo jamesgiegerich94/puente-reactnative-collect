@@ -54,7 +54,7 @@ const PaperInputPicker = ({
 
   React.useEffect(() => {
     // setInputs(configArray.fields);
-    // console.log(formikProps.values)
+    // console.log(formikProps.submitForm)
     if (fieldType === 'select' && values[formikKey]) setFieldValue(values[formikKey]);
 
     if (fieldType === 'photo' && values[formikKey]) setImage(values[formikKey]);
