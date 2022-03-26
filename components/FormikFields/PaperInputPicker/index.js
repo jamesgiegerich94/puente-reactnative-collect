@@ -54,7 +54,6 @@ const PaperInputPicker = ({
 
   React.useEffect(() => {
     // setInputs(configArray.fields);
-    // console.log(formikProps.submitForm)
     if (fieldType === 'select' && values[formikKey]) setFieldValue(values[formikKey]);
 
     if (fieldType === 'photo' && values[formikKey]) setImage(values[formikKey]);
@@ -425,7 +424,6 @@ const PaperInputPicker = ({
                 label={customForm ? result.label : I18n.t(result.label)}
                 onChangeText={handleChange(result.value)}
                 onBlur={handleBlur(result.value)}
-                defaultValue={_.isEmpty(values[formikKey]) ? '' : values[formikKey][result.index]}
                     {...rest} //eslint-disable-line
                 mode="outlined"
                 keyboardType="numeric"

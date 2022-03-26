@@ -30,27 +30,7 @@ const configArray = {
       label: 'identificationForm.dob.label',
       formikKey: 'dob',
       value: '',
-      fieldType: 'multiInputRowNum',
-      options: [
-        {
-          label: 'identificationForm.dob.day',
-          value: 'Day',
-          maxLength: 2,
-          index: 0
-        },
-        {
-          label: 'identificationForm.dob.month',
-          value: 'Month',
-          maxLength: 2,
-          index: 1
-        },
-        {
-          label: 'identificationForm.dob.year',
-          value: 'Year',
-          maxLength: 4,
-          index: 2
-        }
-      ],
+      fieldType: 'input',
       validation: false
     },
     {

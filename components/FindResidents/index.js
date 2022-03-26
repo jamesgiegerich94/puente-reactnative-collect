@@ -22,14 +22,14 @@ const FindResidents = ({
   const [online, setOnline] = useState(true);
   const [searchTimeout, setSearchTimeout] = useState(null);
   const { residentOfflineData } = useContext(OfflineContext);
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     checkOnlineStatus().then(async (connected) => {
       if (connected) fetchData(true, '');
       if (!connected) fetchData(false, '');
     });
-    console.log(selectPerson);
-  }, [organization]);
+  }, [organization, selectPerson]);
 
   const fetchOfflineData = () => {
     setOnline(false);
@@ -147,7 +147,7 @@ const FindResidents = ({
           nickname={selectPerson.nickname}
           city={selectPerson.city}
           license={selectPerson.license}
-          picture={selectPerson.picture? selectPerson.picture.url: ''}
+          picture={selectPerson.picture ? selectPerson.picture.url : ''}
           selectPerson={selectPerson}
           setSelectPerson={setSelectPerson}
           puenteForms={puenteForms}
@@ -158,6 +158,9 @@ const FindResidents = ({
           scrollViewScroll={scrollViewScroll}
           setScrollViewScroll={setScrollViewScroll}
           surveyingOrganization={organization}
+          edit={edit}
+          setEdit={setEdit}
+          fetchData={fetchData}
         />
       )}
     </View>

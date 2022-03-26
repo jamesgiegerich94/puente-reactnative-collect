@@ -15,7 +15,8 @@
     "success": "Success!",
     "ok": "Ok",
     "emptyForm": "Empty Form",
-    "back": "Back"
+    "back": "Back",
+    "cancel": "Cancel Edit"
   },
   "signUp": {
     "firstName": "First Name",
@@ -412,11 +413,21 @@
     },
     "residentPage": {
       "demographics": {
-        "dob": "Date of Birth:",
-        "city": "City:",
-        "community": "Community:",
-        "province": "Province:",
-        "license": "License Number:"
+        "dob": "Date of Birth: ",
+        "city": "City: ",
+        "community": "Community: ",
+        "province": "Province: ",
+        "license": "License Number: ",
+        "age": "Age: ",
+        "sex": "Sex: ",
+        "telephone": "Telephone Number: ",
+        "marriageStatus": "Marriage Status: ",
+        "occupation": "Occupation: ",
+        "educationLevel": "Education Level: ",
+        "subcounty": "Sub-county",
+        "region": "Region: ",
+        "country": "Country: ",
+        "location": "Location: "
       },
       "forms": {
         "completedForms": "Completed Forms",

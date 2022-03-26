@@ -15,7 +15,8 @@
     "success":"¡Éxito!",
     "ok": "OK",
     "emptyForm": "Forma vacía",
-    "back": "Regresa"
+    "back": "Regresa",
+    "cancel": "Cancelar Editar"
   },
   "signUp": {
     "firstName": "Nombre de verdadero",
@@ -412,11 +413,21 @@
     },
     "residentPage": {
       "demographics": {
-        "dob": "Fecha de nacimiento:",
-        "city": "Ciudad:",
-        "community": "Comunidad:",
-        "province": "Provincia:",
-        "license": "Número de licencia:"
+        "dob": "Fecha de nacimiento: ",
+        "city": "Ciudad: ",
+        "community": "Comunidad: ",
+        "province": "Provincia: ",
+        "license": "License Number: ",
+        "age": "Edad: ",
+        "sex": "Sexo: ",
+        "telephone": "Número de teléfono: ",
+        "marriageStatus": "Estado civil: ",
+        "occupation": "Ocupación: ",
+        "educationLevel": "Nivel de Educación: ",
+        "subcounty": "Sub-condado",
+        "region": "Región: ",
+        "country": "País: ",
+        "location": "Localización: "
       },
       "forms": {
         "completedForms": "Formularios completados",

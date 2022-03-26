@@ -17,7 +17,7 @@ import Household from './Housheold';
 const ResidentPage = ({
   fname, lname, age, nickname, city, picture, selectPerson, setSelectPerson,
   puenteForms, navigateToNewRecord, setSurveyee, setView, scrollViewScroll, setScrollViewScroll,
-  surveyingOrganization
+  surveyingOrganization, edit, setEdit
 }) => {
   const [pictureUrl, setPictureUrl] = useState();
   const [demographics, setDemographics] = useState(true);
@@ -29,7 +29,7 @@ const ResidentPage = ({
     if (pic) {
       setPictureUrl({ uri: pic });
     }
-  }, []);
+  }, [selectPerson]);
 
   const showDemographics = () => {
     setForms(false);
@@ -64,12 +64,16 @@ const ResidentPage = ({
           </View>
           <Text style={styles.name}>{`"${nickname}"`}</Text>
 
-          {/* <Button
-            style={styles.button}
-            contentStyle={styles.buttonContent}
-          >
-            {I18n.t('findResident.residentPage.household.editProfile')}
-          </Button> */}
+          { demographics && (
+            <Button
+              style={styles.button}
+              contentStyle={styles.buttonContent}
+              onPress={() => setEdit(!edit)}
+            >
+              {edit ? I18n.t('global.cancel') : I18n.t('findResident.residentPage.household.editProfile')}
+            </Button>
+          )}
+
         </View>
       </View>
       <View
@@ -92,12 +96,14 @@ const ResidentPage = ({
       {
         demographics && (
           <Demographics
+            formId={selectPerson.objectId}
             dob={selectPerson.dob}
             city={city}
             community={selectPerson.communityname}
             province={selectPerson.province}
             license={selectPerson.license}
             selectPerson={selectPerson}
+            setSelectPerson={setSelectPerson}
             scrollViewScroll={scrollViewScroll}
             setScrollViewScroll={setScrollViewScroll}
             surveyingOrganization={surveyingOrganization}
@@ -116,6 +122,9 @@ const ResidentPage = ({
             marriagestatus={selectPerson.marriageStatus}
             occupation={selectPerson.occupation}
             educationLevel={selectPerson.educationLevel}
+            edit={edit}
+            setEdit={setEdit}
+            setView={setView}
           />
         )
       }
@@ -150,7 +159,7 @@ const styles = StyleSheet.create({
   },
   picNameContainer: {
     flexDirection: 'row',
-    margin: 14
+    margin: 20
   },
   nameContainer: {
     flexDirection: 'row',
@@ -161,8 +170,9 @@ const styles = StyleSheet.create({
     marginVertical: 7,
   },
   button: {
-    width: 120,
-    marginLeft: -5
+    width: 150,
+    marginLeft: -20,
+    marginBottom: -20
   },
   buttonContent: {
     marginLeft: 0

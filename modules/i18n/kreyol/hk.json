@@ -15,7 +15,8 @@
     "success": "Siksè!",	
     "ok": "Ok",	
     "emptyForm": "Vide Fòm",
-    "back":"Tounen"
+    "back":"Tounen",
+    "cancel": "Anile Modifye"
   },
   "signUp": {
     "firstName": "Non",
@@ -411,11 +412,21 @@
     },
     "residentPage": {
       "demographics": {
-        "dob": "Dat de nesans:",
-        "city": "Vil:",
-        "community": "Katye:",
-        "province": "Provens:",
-        "license": "Nimero kat didantite:"
+        "dob": "Dat nesans: ",
+        "city": "Vil: ",
+        "community": "Kominote: ",
+        "province": "Pwovens: ",
+        "license": "Nimewo Lisans: ",
+        "age": "Laj: ",
+        "sex": "Sèks: ",
+        "telephone": "Nimewo telefòn: ",
+        "marriageStatus": "Eta Maryaj: ",
+        "occupation": "Okipasyon: ",
+        "educationLevel": "Nivo Edikasyon: ",
+        "subcounty": "Sou-konte",
+        "region": "Rejyon: ",
+        "country": "Peyi: ",
+        "location": "Kote: "
       },
       "forms": {
         "completedForms": "Ranpli Fòm",
