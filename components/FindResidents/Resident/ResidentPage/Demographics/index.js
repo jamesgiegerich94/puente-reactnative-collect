@@ -22,19 +22,18 @@ const Demographics = ({
   scrollViewScroll, setScrollViewScroll, age, fname, lname,
   nickname, sex, telephonenumber, marriagestatus, occupation,
   educationLevel, subcounty, region, country, location,
-  photo, householdId, surveyingUser, setSelectedPerson,
-  formId, edit, setEdit
+  photo, householdId, surveyingUser, setSelectPerson,
+  formId, edit, setEdit, selectedPerson
 }) => {
   const [inputs, setInputs] = useState([]);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     setInputs(configArray.fields);
-  }, [setInputs, configArray, setEdit]);
+  }, [setInputs, configArray, selectedPerson]);
 
   return (
     <View style={styles.container}>
-
       { edit && (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <Formik
@@ -85,11 +84,6 @@ const Demographics = ({
 
               formObject.fullTextSearchIndex = formObject.searchIndex.join(' ');
 
-              // const valuesToPrune = ['Month', 'Day', 'Year'];
-              // valuesToPrune.forEach((value) => {
-              //   delete formObject[value];
-              // });
-
               const submitAction = () => {
                 setTimeout(() => {
                   // setSelectedForm('');
@@ -101,15 +95,14 @@ const Demographics = ({
                 parseClassID: formId,
                 localObject: formObject
               };
-              updateObject(postParams).then((result) => {
-                setSelectedPerson(result);
-                // console.log(result);
+
+              updateObject(postParams).then(() => {
                 submitAction();
               }, () => {
                 setSubmitting(false);
               });
-              // setSelectPerson(null);
-              // setView('Find Records')
+
+              setSelectPerson(values);
               setEdit(false);
             }}
             // only validate on submit, errors persist after fixing
@@ -151,58 +144,86 @@ const Demographics = ({
         <View style={styles.container}>
           <Text style={styles.topLabel}>
             {I18n.t('findResident.residentPage.demographics.dob')}
+          </Text>
+          <Text style={styles.values}>
             {` ${dob}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.age')}
+          </Text>
+          <Text style={styles.values}>
             {` ${age}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.sex')}
+          </Text>
+          <Text style={styles.values}>
             {` ${sex}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.telephone')}
+          </Text>
+          <Text style={styles.values}>
             {` ${telephonenumber}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.marriageStatus')}
+          </Text>
+          <Text style={styles.values}>
             {` ${marriagestatus}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.occupation')}
+          </Text>
+          <Text style={styles.values}>
             {` ${occupation}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.educationLevel')}
+          </Text>
+          <Text style={styles.values}>
             {` ${educationLevel}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.community')}
+          </Text>
+          <Text style={styles.values}>
             {` ${community}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.subcounty')}
+          </Text>
+          <Text style={styles.values}>
             {` ${subcounty}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.city')}
+          </Text>
+          <Text style={styles.values}>
             {` ${city}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.province')}
+          </Text>
+          <Text style={styles.values}>
             {` ${province}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.region')}
+          </Text>
+          <Text style={styles.values}>
             {` ${region}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.country')}
+          </Text>
+          <Text style={styles.values}>
             {` ${country}`}
           </Text>
           <Text style={styles.labels}>
             {I18n.t('findResident.residentPage.demographics.location')}
+          </Text>
+          <Text style={styles.values}>
             {` ${location.latitude}, ${location.longitude}`}
           </Text>
         </View>
@@ -218,11 +239,21 @@ const styles = StyleSheet.create({
   labels: {
     marginTop: 20,
     fontSize: 17,
-    color: '#696969'
+    color: '#696969',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textDecorationLine: 'underline'
   },
   topLabel: {
     fontSize: 17,
-    color: '#696969'
+    color: '#696969',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textDecorationLine: 'underline'
+  },
+  values: {
+    fontSize: 17,
+    textAlign: 'center'
   }
 });
 

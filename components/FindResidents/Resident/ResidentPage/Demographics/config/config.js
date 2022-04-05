@@ -1,11 +1,6 @@
 const configArray = {
   fields: [
     {
-      label: 'identificationForm.demographics',
-      fieldType: 'header',
-      formikKey: 'none_bi',
-    },
-    {
       label: 'global.fName',
       formikKey: 'fname',
       value: '',

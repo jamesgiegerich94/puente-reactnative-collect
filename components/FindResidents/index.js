@@ -1,7 +1,9 @@
 import { Spinner } from 'native-base';
 import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
-import { Button, Headline, Searchbar } from 'react-native-paper';
+import {
+  Button, Headline, Searchbar
+} from 'react-native-paper';
 
 import { OfflineContext } from '../../context/offline.context';
 import { getData } from '../../modules/async-storage';

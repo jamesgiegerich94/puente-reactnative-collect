@@ -50,7 +50,14 @@ const ResidentPage = ({
   };
   return (
     <View>
-      <Button icon="arrow-left" width={100} onPress={() => setSelectPerson()}>
+      <Button
+        icon="arrow-left"
+        width={100}
+        onPress={() => {
+          setSelectPerson();
+          setEdit(false);
+        }}
+      >
         {I18n.t('dataCollection.back')}
       </Button>
       <View style={styles.picNameContainer}>
@@ -124,7 +131,7 @@ const ResidentPage = ({
             educationLevel={selectPerson.educationLevel}
             edit={edit}
             setEdit={setEdit}
-            setView={setView}
+            selectedPerson={selectPerson}
           />
         )
       }
