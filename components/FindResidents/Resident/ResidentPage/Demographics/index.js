@@ -109,7 +109,6 @@ const Demographics = ({
             validateOnBlur={false}
             validateOnChange={false}
           >
-
             {(formikProps) => (
               <View>
                 {inputs.length !== 0 && inputs.map((result) => (
@@ -224,7 +223,7 @@ const Demographics = ({
             {I18n.t('findResident.residentPage.demographics.location')}
           </Text>
           <Text style={styles.values}>
-            {` ${location.latitude}, ${location.longitude}`}
+            {location && `${location.latitude}, ${location.longitude}`}
           </Text>
         </View>
       )}
