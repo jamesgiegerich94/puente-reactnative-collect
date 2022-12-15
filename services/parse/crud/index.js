@@ -1,10 +1,14 @@
-import { Parse } from 'parse/react-native';
-
+import selectedENV from '../../../environment';
+import client from '../client';
 import { customMultiParamQueryService, customMultiValueArrayService, customQueryService } from './custom-queries';
+
+const { TEST_MODE } = selectedENV;
+const Parse = client(TEST_MODE);
 
 function retrieveHelloFunction() {
   Parse.Cloud.run('hello').then((result) => result);
 }
+
 function residentIDQuery(params) {
   const { parseParam, limit } = params;
   function checkIfAlreadyExist(accumulator, currentVal) {
@@ -99,6 +103,16 @@ function postOfflineForms(params) {
   });
 }
 
+function uploadOfflineForms(params) {
+  return new Promise((resolve, reject) => {
+    Parse.Cloud.run('uploadOfflineForms', params).then((result) => {
+      resolve(result);
+    }, (error) => {
+      reject(error);
+    });
+  });
+}
+
 export {
   countService,
   customMultiParamQueryService,
@@ -110,5 +124,6 @@ export {
   postOfflineForms,
   residentIDQuery,
   retrieveHelloFunction,
-  updateObject
+  updateObject,
+  uploadOfflineForms
 };

@@ -16,7 +16,8 @@
     "ok": "Ok",
     "emptyForm": "Empty Form",
     "back": "Back",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "pleaseTryAgain": "Please, try again"
   },
   "signUp": {
     "firstName": "First Name",
@@ -468,6 +469,7 @@
     "volunteerSince": "Volunteer Since",
     "surveysCollected": "Surveys Collected",
     "submitOffline": "Submit Offline Forms",
+    "populateOffline": "Populate Resident's Cache",
     "settingsPage": "Settings Page",
     "failedAttempt": "Failed Attempt Submitting Offline Forms.",
     "tryAgain": "Please ensure that you are connected to the internet and try again.",
@@ -507,7 +509,8 @@
     "offlineData": "Offline Data Query",
     "language": "Language",
     "back": "Back",
-    "logout": "Log out"
+    "logout": "Log out",
+    "deleteUser":"Delete user?"
   },
   "findRecordSettings": {
     "currentReccordsStored": "Current records stored",
