@@ -113,6 +113,7 @@ const ResidentPage = ({
             setSelectPerson={setSelectPerson}
             scrollViewScroll={scrollViewScroll}
             setScrollViewScroll={setScrollViewScroll}
+            setView={setView}
             surveyingOrganization={surveyingOrganization}
             fname={fname}
             lname={lname}

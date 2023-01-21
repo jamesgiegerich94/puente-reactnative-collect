@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
 
 import surveyingUserFailsafe from '../../../../../domains/DataCollection/Forms/utils';
@@ -23,7 +23,7 @@ const Demographics = ({
   nickname, sex, telephonenumber, marriagestatus, occupation,
   educationLevel, subcounty, region, country, location,
   photo, householdId, surveyingUser, setSelectPerson,
-  formId, edit, setEdit, selectedPerson
+  formId, edit, setEdit, selectedPerson, setView
 }) => {
   const [inputs, setInputs] = useState([]);
   const [submitting, setSubmitting] = useState(false);
@@ -35,7 +35,7 @@ const Demographics = ({
   return (
     <View style={styles.container}>
       { edit && (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Formik
             initialValues={{
               communityname: community,
@@ -65,7 +65,7 @@ const Demographics = ({
               formObject.surveyingOrganization = surveyingOrganization || user.organization;
               formObject.surveyingUser = await surveyingUserFailsafe(user, surveyingUser, isEmpty);
               formObject.appVersion = await getData('appVersion') || '';
-              // formObject.phoneOS = Platform.OS || '';
+              formObject.phoneOS = Platform.OS || '';
 
               formObject.latitude = values.location?.latitude || 0;
               formObject.longitude = values.location?.longitude || 0;
@@ -127,7 +127,7 @@ const Demographics = ({
                   <ActivityIndicator />
                 ) : (
                   <PaperButton
-                    onPressEvent={formikProps.handleSubmit}
+                    onPress={formikProps.handleSubmit}
                     buttonText={_.isEmpty(formikProps.values) ? I18n.t('global.emptyForm') : I18n.t('demographics.updateForm')}
                     icon={_.isEmpty(formikProps.values) ? 'alert-octagon' : 'plus'}
                     style={{ backgroundColor: _.isEmpty(formikProps.values) ? 'red' : 'green' }}
