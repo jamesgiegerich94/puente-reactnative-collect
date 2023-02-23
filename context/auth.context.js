@@ -1,12 +1,12 @@
-import React, { createContext, useEffect, useState } from 'react';
-
-import { deleteData, getData, storeData } from '../modules/async-storage';
 import {
   retrieveCurrentUserAsyncFunction,
   retrieveSignInFunction,
   retrieveSignOutFunction,
-  retrieveSignUpFunction
-} from '../services/parse/auth/index';
+  retrieveSignUpFunction,
+} from "@app/services/parse/auth/index";
+import { getData, storeData } from "@modules/async-storage";
+import checkOnlineStatus from "@modules/offline";
+import React, { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
 
@@ -22,10 +22,10 @@ export const UserContextProvider = ({ children }) => {
         const usr = currentParseUser;
         usr.isOnline = true;
         setUser(usr);
-        storeData(usr, 'currentUser');
+        storeData(usr, "currentUser");
         setIsLoading(false);
       } else {
-        getData('currentUser').then((currentAsyncUser) => {
+        getData("currentUser").then((currentAsyncUser) => {
           if (currentAsyncUser) {
             const usr = currentAsyncUser;
             usr.isOnline = false;
@@ -45,8 +45,9 @@ export const UserContextProvider = ({ children }) => {
         const usr = currentParseUser;
         usr.isOnline = true;
         setUser(usr);
-        storeData(usr, 'currentUser');
-        storeData(password, 'password');
+        storeData(usr, "currentUser");
+        storeData(password, "password");
+        setError(null);
         setIsLoading(false);
         return true;
       })
@@ -59,12 +60,17 @@ export const UserContextProvider = ({ children }) => {
 
   const offlineLogin = (enteredCredentials) => {
     const { username, password } = enteredCredentials;
-    const { username: usr, password: pswd } = user; // cached user
+    const { name: usrname, password: pswd } = user; // cached user
 
     setIsLoading(true);
 
-    if (username !== usr && password !== pswd) return false;
+    if (username !== usrname || password !== pswd) {
+      setError("signIn.usernamePasswordIncorrect");
+      setIsLoading(false);
+      return false;
+    }
 
+    setError(null);
     setIsLoading(false);
 
     return true;
@@ -75,13 +81,14 @@ export const UserContextProvider = ({ children }) => {
    * @returns User Object
    */
 
-  const register = async (params) => {
+  const register = async (params, notificationType) => {
     const { password } = params;
-    storeData(password, 'password');
+    storeData(password, "password");
     setIsLoading(true);
     try {
-      const u = await retrieveSignUpFunction(params);
+      const u = await retrieveSignUpFunction(params, notificationType);
       setUser(u);
+      setError(null);
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
@@ -89,13 +96,18 @@ export const UserContextProvider = ({ children }) => {
     }
   };
 
-  const onLogout = async () => retrieveSignOutFunction()
-    .then(() => {
-      setUser(null);
-      setError(null);
-      deleteData('currentUser');
-      return true;
-    });
+  const onLogout = async () => {
+    const connected = await checkOnlineStatus();
+    if (connected) {
+      return retrieveSignOutFunction().then(() => {
+        setError(null);
+        return true;
+      });
+    }
+
+    setError(null);
+    return true;
+  };
 
   return (
     <UserContext.Provider
