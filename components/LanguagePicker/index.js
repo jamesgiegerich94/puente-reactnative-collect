@@ -1,4 +1,4 @@
-import { Picker } from 'native-base';
+import { Select } from 'native-base';
 import React from 'react';
 
 import I18n from '../../modules/i18n';
@@ -18,15 +18,15 @@ const languages = [
 const LanguagePicker = (props) => {
   const { language, onChangeLanguage } = props;
   return (
-    <Picker
+    <Select
       mode="dropdown"
       iosHeader=""
       style={{ width: undefined, height: 40, }}
       selectedValue={language}
       onValueChange={onChangeLanguage}
     >
-      {languages.map((lang) => <Picker.Item key={lang.key} value={lang.key} label={`🌐${lang.label}`} />)}
-    </Picker>
+      {languages.map((lang) => <Select.Item key={lang.key} value={lang.key} label={`🌐${lang.label}`} />)}
+    </Select>
   );
 };
 

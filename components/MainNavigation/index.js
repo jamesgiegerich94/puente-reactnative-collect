@@ -13,6 +13,7 @@ import { theme } from '../../modules/theme';
 import BottomTabNavigator from './BottomTabNavigator.';
 import LinkingConfiguration from './LinkingConfiguration';
 
+
 const Stack = createStackNavigator();
 
 const { background } = theme.colors;

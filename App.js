@@ -11,6 +11,7 @@ import { OfflineContextProvider } from './context/offline.context';
 import useCachedResources from './modules/cached-resources/useCachedResources';
 import { theme } from './modules/theme';
 import { initialize } from './services/parse/auth';
+import { NativeBaseProvider } from 'native-base'
 
 initialize();
 
@@ -21,15 +22,16 @@ export default function App() {
     return null;
   }
   return (
-    <NavigationContainer independent>
-      <PaperProvider theme={theme}>
-        <UserContextProvider>
-          <OfflineContextProvider>
-            <MainNavigation />
-          </OfflineContextProvider>
-        </UserContextProvider>
-      </PaperProvider>
-    </NavigationContainer>
-
+    <NativeBaseProvider>
+      <NavigationContainer independent>
+        <PaperProvider theme={theme}>
+          <UserContextProvider>
+            <OfflineContextProvider>
+              <MainNavigation />
+            </OfflineContextProvider>
+          </UserContextProvider>
+        </PaperProvider>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }
