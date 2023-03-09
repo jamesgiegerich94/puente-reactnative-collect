@@ -152,10 +152,5 @@ export {
   postOfflineForms,
   residentIDQuery,
   retrieveHelloFunction,
-<<<<<<< HEAD
-  updateObject,
-  uploadOfflineForms
-=======
   uploadOfflineForms,
->>>>>>> dev
 };

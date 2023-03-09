@@ -1,14 +1,3 @@
-<<<<<<< HEAD:components/FormikFields/PaperInputPicker/index.js
-import _ from 'lodash';
-import * as React from 'react';
-import {
-  Image, Text, TouchableWithoutFeedback, View
-} from 'react-native';
-import {
-  Button, Headline,
-  TextInput,
-} from 'react-native-paper';
-=======
 import UseCameraRoll from "@impacto-design-system/Multimedia/CameraRoll";
 import UseCamera from "@impacto-design-system/Multimedia/UseCamera";
 import I18n from "@modules/i18n";
@@ -16,7 +5,6 @@ import { layout, theme } from "@modules/theme";
 import * as React from "react";
 import { Image, Text, TouchableWithoutFeedback, View } from "react-native";
 import { Button, Headline, TextInput } from "react-native-paper";
->>>>>>> dev:impacto-design-system/Extensions/FormikFields/PaperInputPicker/index.js
 
 import AutoFill from "./AutoFill";
 import AutoFillMS from "./AutoFillMS";
@@ -81,12 +69,7 @@ const PaperInputPicker = ({
             <Text style={stylesDefault.label}>{translatedLabel}</Text>
           )}
           <TextInput
-<<<<<<< HEAD:components/FormikFields/PaperInputPicker/index.js
-            label={translatedLabel.length > 30 ? '' : translatedLabel}
-            defaultValue={_.isEmpty(formikProps.values) ? '' : values[formikKey]}
-=======
             label={translatedLabel.length > 30 ? "" : translatedLabel}
->>>>>>> dev:impacto-design-system/Extensions/FormikFields/PaperInputPicker/index.js
             onChangeText={handleChange(formikKey)}
             onBlur={handleBlur(formikKey)}
             {...rest} //eslint-disable-line

@@ -59,17 +59,12 @@ export default class AutoFill extends Component {
     const fields = this.findField(query);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
     const {
-<<<<<<< HEAD:components/FormikFields/PaperInputPicker/AutoFill/index.js
-      label, translatedLabel, formikProps, formikKey,
-      initialValue, scrollViewScroll, setScrollViewScroll
-=======
       label,
       translatedLabel,
       formikProps,
       formikKey,
       scrollViewScroll,
       setScrollViewScroll,
->>>>>>> dev:impacto-design-system/Extensions/FormikFields/PaperInputPicker/AutoFill/index.js
     } = this.props;
 
     const placeholder = I18n.t(label);
